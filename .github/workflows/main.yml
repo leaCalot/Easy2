@@ -1,0 +1,64 @@
+## Continous Integration with Easy2
+# @author Lea Calot
+name: CI
+
+on:
+  push:
+    branches: [ ]
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Check Out Latest
+        uses: actions/checkout@v3
+
+      - name: Install Required Tools
+        run: |
+          sudo apt-get update -y
+          sudo apt-get install -y flex build-essential meson ninja-build gcc mingw-w64 nsis nsis-doc nsis-pluginapi
+
+      - name: Build Linux build
+        run: |
+          rm -rf build_linux
+          meson build_linux
+          ninja -C build_linux
+
+      - name: Build Windows Build
+        run: |
+          rm -rf build
+          meson --cross-file win64.ini build
+          ninja -C build
+
+      - name: Prepare Linux release
+        run: |
+          mkdir easy2_linux
+          cp -rv build_linux/src/easy2 easy2_linux
+          cp -rv easy2_howto.doc easy2_linux
+          cp README.md easy2_linux
+          cp AUTHORS easy2_linux
+          cp LICENSE easy2_linux
+          tar cvJf easy2_linux64.tar.xz easy2_linux
+
+      - name: Prepare Windows Release
+        run: |
+          mkdir easy2_win
+          cp -rv build/easy2_installer.exe easy2_win
+          cp -rv easy2_howto.doc easy2_win
+          cp README.md easy2_win
+          cp AUTHORS easy2_win
+          cp LICENSE easy2_win
+          cd easy2_win
+          zip -r9ov ../easy2_windows64.zip *
+
+      - name: Publish Release on Github
+        uses: softprops/action-gh-release@v1
+        if: startsWith(github.ref, 'refs/tags/v')
+        with:
+          files: |
+            easy2_windows64.zip
+            easy2_linux64.tar.xz
+          token: ${{ secrets.DEPLOYTOKEN }}

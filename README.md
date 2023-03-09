@@ -93,7 +93,10 @@ Lastly, the easy2.exe target is in the Makefile and works:
 "make easy2.exe"
 
 ## Cross-compiling Easy2 for Windows from Linux
- * Install mingw64
+ * Install mingw64 nsis nsis-doc nsis-pluginapi
+```
+sudo apt-get install mingw-w64 nsis nsis-doc nsis-pluginapi
+```
  * Configure the project using the cross file for win64 environments as follows
 ```
 meson build
