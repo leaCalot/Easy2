@@ -46,7 +46,7 @@ jobs:
       - name: Prepare Windows Release
         run: |
           mkdir easy2_win
-          cp -rv build/easy2_installer easy2_win
+          cp -rv build/easy2_installer.exe easy2_win
           cp -rv easy2_howto.doc easy2_win
           cp README.md easy2_win
           cp AUTHORS easy2_win
