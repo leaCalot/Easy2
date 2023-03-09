@@ -28,3 +28,14 @@ app_inc = include_directories(
 	)
 
 subdir('src')
+
+if meson.is_cross_build()
+  script_path = join_paths(meson.current_source_dir(), 'easy2.nsi')
+  installer_target = custom_target(
+    'easy_installer',
+    input: [easy2, 'easy2.nsi'],
+    output: ['easy2_installer.exe'],
+    command: ['makensis', script_path],
+    build_by_default: true,
+  )
+endif
