@@ -92,6 +92,15 @@ Manually generate the lex.yy.c file with "flex easy2.l"
 Lastly, the easy2.exe target is in the Makefile and works:
 "make easy2.exe"
 
+## Cross-compiling Easy2 for Windows from Linux
+ * Install mingw64
+ * Configure the project using the cross file for win64 environments as follows
+```
+meson build
+ninja2 -C ./build
+meson build --cross-file win64.ini
+```
+
 
 
 

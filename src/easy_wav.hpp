@@ -1,7 +1,3 @@
-#pragma warning ( push )
-#pragma warning ( disable : 21 )
-#pragma warning ( pop )
-
 //----------------------------------------------------------------------
 // Audio ouput WAV file format.
 //
