@@ -19,7 +19,7 @@ jobs:
       - name: Install Required Tools
         run: |
           sudo apt-get update -y
-          sudo apt-get install -y flex build-essential meson ninja-build gcc mingw64 nsis nsis-doc nsis-pluginapi
+          sudo apt-get install -y flex build-essential meson ninja-build gcc mingw-w64 nsis nsis-doc nsis-pluginapi
 
       - name: Build Linux build
         run: |
